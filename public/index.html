@@ -16,132 +16,123 @@
 }
 
 body {
-  background: #0f172a;
-  color: white;
-  display: flex;
+  background: #fafafa;
   height: 100vh;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 260px;
-  background: #111827;
-  padding: 20px;
+/* Phone Frame */
+.app {
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  background: white;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #1f2937;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
 }
 
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.new-chat {
-  background: #2563eb;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 20px;
-  transition: 0.2s;
-}
-
-.new-chat:hover {
-  background: #1d4ed8;
-}
-
-.chat-history {
-  flex: 1;
-  overflow-y: auto;
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-/* Main */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
+/* Header */
 .header {
-  padding: 15px;
-  background: #111827;
-  border-bottom: 1px solid #1f2937;
+  padding: 14px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  letter-spacing: 0.5px;
 }
 
-/* Chat area */
+/* Chat Area */
 .chat-container {
   flex: 1;
-  padding: 20px;
   overflow-y: auto;
-  scroll-behavior: smooth;
+  padding: 15px;
+  background: #fafafa;
 }
 
 .message {
-  max-width: 70%;
-  margin-bottom: 15px;
-  padding: 12px 16px;
-  border-radius: 14px;
+  max-width: 75%;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
   animation: fadeIn 0.2s ease-in-out;
 }
 
 .user {
-  background: #2563eb;
-  align-self: flex-end;
+  background: #0095f6;
+  color: white;
   margin-left: auto;
+  border-bottom-right-radius: 4px;
 }
 
 .bot {
-  background: #1f2937;
-  align-self: flex-start;
+  background: #e4e6eb;
+  color: #111;
+  border-bottom-left-radius: 4px;
 }
 
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(5px);}
-  to {opacity: 1; transform: translateY(0);}
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Input */
+/* Input Area */
 .input-area {
-  padding: 15px;
-  border-top: 1px solid #1f2937;
   display: flex;
-  gap: 10px;
-  background: #111827;
+  padding: 10px;
+  border-top: 1px solid #dbdbdb;
+  background: white;
 }
 
 .input-area input {
   flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
+  border: 1px solid #dbdbdb;
+  border-radius: 20px;
+  padding: 10px 14px;
   outline: none;
-  background: #1f2937;
-  color: white;
+  font-size: 14px;
 }
 
 .input-area button {
-  background: #2563eb;
+  margin-left: 8px;
+  background: #0095f6;
   border: none;
-  padding: 0 18px;
-  border-radius: 10px;
+  color: white;
+  padding: 0 16px;
+  border-radius: 20px;
   cursor: pointer;
+  font-weight: 500;
   transition: 0.2s;
 }
 
 .input-area button:hover {
-  background: #1d4ed8;
+  background: #007ad9;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
+/* Scrollbar */
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* Desktop Centering */
+@media (min-width: 768px) {
+  body {
+    background: #e9ecef;
+  }
+  .app {
+    height: 90vh;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   }
 }
 </style>
@@ -149,19 +140,13 @@ body {
 
 <body>
 
-<div class="sidebar">
-  <h2>Medical AI</h2>
-  <div class="new-chat" onclick="newChat()">+ New Chat</div>
-  <div class="chat-history">No previous chats</div>
-</div>
-
-<div class="main">
+<div class="app">
   <div class="header">Medical AI Assistant</div>
 
   <div class="chat-container" id="chat"></div>
 
   <div class="input-area">
-    <input type="text" id="messageInput" placeholder="Ask anything about health..." />
+    <input type="text" id="messageInput" placeholder="Message..." />
     <button onclick="sendMessage()">Send</button>
   </div>
 </div>
@@ -176,10 +161,6 @@ function addMessage(text, type) {
   msg.innerText = text;
   chat.appendChild(msg);
   chat.scrollTop = chat.scrollHeight;
-}
-
-function newChat() {
-  chat.innerHTML = "";
 }
 
 async function sendMessage() {
@@ -198,7 +179,7 @@ async function sendMessage() {
   try {
     const response = await fetch("/chat", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
     });
 
