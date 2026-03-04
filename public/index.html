@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Medical AI</title>
+<title>Medical AI Pro</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -16,123 +16,163 @@
 }
 
 body {
-  background: #fafafa;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
-/* Phone Frame */
+/* Main Container */
 .app {
   width: 100%;
-  max-width: 500px;
-  height: 100vh;
-  background: white;
+  max-width: 1100px;
+  height: 95vh;
   display: flex;
-  flex-direction: column;
-  border-left: 1px solid #dbdbdb;
-  border-right: 1px solid #dbdbdb;
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
 
-/* Header */
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: rgba(0,0,0,0.25);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.new-chat {
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 20px;
+}
+
+.new-chat:hover {
+  opacity: 0.85;
+}
+
+.history {
+  flex: 1;
+  overflow-y: auto;
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+/* Main Chat */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .header {
-  padding: 14px;
+  padding: 18px;
   text-align: center;
   font-weight: 600;
-  font-size: 16px;
-  color: white;
-  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
 }
 
 /* Chat Area */
 .chat-container {
   flex: 1;
+  padding: 25px;
   overflow-y: auto;
-  padding: 15px;
-  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .message {
-  max-width: 75%;
-  padding: 10px 14px;
-  margin-bottom: 12px;
+  max-width: 70%;
+  padding: 14px 18px;
   border-radius: 18px;
+  line-height: 1.5;
   font-size: 14px;
-  line-height: 1.4;
   animation: fadeIn 0.2s ease-in-out;
 }
 
 .user {
-  background: #0095f6;
-  color: white;
-  margin-left: auto;
-  border-bottom-right-radius: 4px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
 }
 
 .bot {
-  background: #e4e6eb;
-  color: #111;
-  border-bottom-left-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {opacity: 0; transform: translateY(6px);}
+  to {opacity: 1; transform: translateY(0);}
 }
 
 /* Input Area */
 .input-area {
+  padding: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
   display: flex;
-  padding: 10px;
-  border-top: 1px solid #dbdbdb;
-  background: white;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
 }
 
 .input-area input {
   flex: 1;
-  border: 1px solid #dbdbdb;
-  border-radius: 20px;
-  padding: 10px 14px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
   outline: none;
+  background: rgba(255,255,255,0.08);
+  color: white;
   font-size: 14px;
 }
 
 .input-area button {
-  margin-left: 8px;
-  background: #0095f6;
+  padding: 0 20px;
+  border-radius: 12px;
   border: none;
-  color: white;
-  padding: 0 16px;
-  border-radius: 20px;
   cursor: pointer;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  color: white;
   font-weight: 500;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .input-area button:hover {
-  background: #007ad9;
+  opacity: 0.85;
 }
 
-/* Scrollbar */
-.chat-container::-webkit-scrollbar {
-  width: 6px;
-}
-.chat-container::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
-
-/* Desktop Centering */
-@media (min-width: 768px) {
-  body {
-    background: #e9ecef;
+/* Mobile */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
   }
+
   .app {
-    height: 90vh;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .message {
+    max-width: 85%;
   }
 }
 </style>
@@ -141,14 +181,24 @@ body {
 <body>
 
 <div class="app">
-  <div class="header">Medical AI Assistant</div>
 
-  <div class="chat-container" id="chat"></div>
-
-  <div class="input-area">
-    <input type="text" id="messageInput" placeholder="Message..." />
-    <button onclick="sendMessage()">Send</button>
+  <div class="sidebar">
+    <h2>Medical AI Pro</h2>
+    <div class="new-chat" onclick="newChat()">+ New Chat</div>
+    <div class="history">No previous chats</div>
   </div>
+
+  <div class="main">
+    <div class="header">AI Medical Assistant</div>
+
+    <div class="chat-container" id="chat"></div>
+
+    <div class="input-area">
+      <input type="text" id="messageInput" placeholder="Ask your health question..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -161,6 +211,10 @@ function addMessage(text, type) {
   msg.innerText = text;
   chat.appendChild(msg);
   chat.scrollTop = chat.scrollHeight;
+}
+
+function newChat() {
+  chat.innerHTML = "";
 }
 
 async function sendMessage() {
@@ -179,7 +233,7 @@ async function sendMessage() {
   try {
     const response = await fetch("/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ message })
     });
 
@@ -194,9 +248,7 @@ async function sendMessage() {
 }
 
 input.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    sendMessage();
-  }
+  if (e.key === "Enter") sendMessage();
 });
 </script>
 
